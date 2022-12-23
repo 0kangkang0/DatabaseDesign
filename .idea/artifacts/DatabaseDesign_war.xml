@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="DatabaseDesign:war">
+    <output-path>$PROJECT_DIR$/DatabaseDesign/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>DatabaseDesign</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="DatabaseDesign-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="DatabaseDesign:war exploded" />
+    </root>
+  </artifact>
+</component>

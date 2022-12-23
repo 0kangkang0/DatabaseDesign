@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ch">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <link rel="shortcut icon" href="img/R-C.png" type="image/x-icon"/>
+    <style>
+        #err_msg {
+            color: red;
+            align-content: center;
+        }
+    </style>
+    <link rel="stylesheet" href="css/global.css">
+</head>
+
+<body>
+<div id="app">
+    <div id="login_box">
+        <h2>LOGIN</h2>
+        <div class="input_box">
+            <p id="err_msg">{{err_msg}}</p>
+            <label>
+                <el-input v-model="login_data.username" placeholder="请输入用户名" id="input_box"></el-input>
+            </label>
+        </div>
+        <div class="demo-input-suffix">
+            <el-input placeholder="请输入密码" v-model="login_data.password" show-password id="input_box"></el-input>
+        </div>
+        <div>
+        <button @click="login">登录</button>
+        </div>
+        <a href="http://localhost:8080/DatabaseDesign/register.html"><p align="right">点我注册</p></a>
+        <br>
+    </div>
+</div>
+
+
+<script src="js/vue.js"></script>
+<script src="element-ui/lib/index.js"></script>
+<script src="js/hash.js"></script>
+<link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+<script src="js/axios-0.18.0.js"></script>
+
+<script>
+    new Vue({
+        el: "#app",
+        methods: {
+            //点击登录后执行方法
+             login(val) {
+                 this.login_data.password=hex_md5(this.login_data.password);
+                 axios({
+                    method: "post",
+                    url: "http://localhost:8080/DatabaseDesign/user/loginServlet?username=" + this.login_data.username + "&password=" + this.login_data.password,
+                    data: this.login_data,
+                }).then(res => {
+                    if (res.data === "login_false") {
+                        this.err_msg = "输入的信息有误";
+                        this.login_data.password = '';
+                        this.login_data.username = '';
+                    } else if (res.data === 'manager') {
+                        window.location = "http://localhost:8080/DatabaseDesign/mainPage.html";
+                    } else {
+                        window.location = "http://localhost:8080/DatabaseDesign/customer.html";
+                    }
+                })
+
+            }
+        },
+        data() {
+            return {
+                login_data: {
+                    username: '',
+                    password: '',
+                    id: '',
+                    role: ''
+                },
+                err_msg: ''
+            }
+        }
+    })
+</script>
+</body>
+</html>

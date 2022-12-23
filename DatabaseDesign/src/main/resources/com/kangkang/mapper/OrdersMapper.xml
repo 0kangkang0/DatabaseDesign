@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kangkang.mapper.OrdersMapper">
+
+
+    <select id="selectAll" resultType="com.kangkang.pojo.Orders">
+        select orders.id,orders.goodsId,orders.addressId,customer.name customerName,address.name shName,
+        goods.goodName goodsName,orders.num,price,orders.status,
+        concat(address.provinceCityArea,address.detailAddress)as address,
+        buyTime,fhTime,finishTime,address.telephone
+        from orders,goods,address,customer where
+        orders.addressId=address.id and orders.goodsId=goods.id and
+        address.customerId=customer.id
+        <if test="orders.customerName!=null and orders.customerName!=''">
+            and customer.name like #{orders.customerName}
+        </if>
+        <if test="orders.goodsName!=null and orders.goodsName!=''">
+            and goods.goodName like #{orders.goodsName}
+        </if>
+        <if test="orders.status!=null and orders.status!=''">
+            and orders.status like #{orders.status}
+        </if>
+        <if test="orders.customerId!=null and orders.customerId!=''">
+            and customer.id = #{orders.customerId}
+        </if>
+        limit #{begin},#{size}
+    </select>
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(*)
+        from orders,goods,address,customer where
+        orders.addressId=address.id and orders.goodsId=goods.id and
+        address.customerId=customer.id
+        <if test="orders.customerName!=null and orders.customerName!=''">
+            and customer.name like #{orders.customerName}
+        </if>
+        <if test="orders.goodsName!=null and orders.goodsName!=''">
+            and goods.goodName like #{orders.goodsName}
+        </if>
+        <if test="orders.status!=null and orders.status!=''">
+            and orders.status like #{orders.status}
+        </if>
+        <if test="orders.customerId!=null and orders.customerId!=''">
+            and customer.id = #{orders.customerId}
+        </if>
+        limit #{begin},#{size}
+    </select>
+</mapper>

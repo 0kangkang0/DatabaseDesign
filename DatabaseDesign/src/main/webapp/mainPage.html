@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="ch">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电商后台管理系统</title>
+    <link rel="shortcut icon" href="img/R-C.png" type="image/x-icon"/>
+    <style>
+        .el-tabs__item:hover {
+            color: gainsboro;
+            background-color: darkgray;
+            align-content: center;
+        }
+
+        .el-tabs__item.is-active {
+            color: darkgray;
+            background-color: gray;
+        }
+
+        #center {
+            align-content: center;
+        }
+
+        .demo-table-expand {
+            font-size: 0;
+        }
+
+        .demo-table-expand label {
+            width: 90px;
+            color: #99a9bf;
+        }
+
+        .demo-table-expand .el-form-item {
+            margin-right: 0;
+            margin-bottom: 0;
+            width: 50%;
+        }
+
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+        }
+
+        .el-table .warning-row {
+            background: oldlace;
+        }
+
+        .el-table .success-row {
+            background: #f0f9eb;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+<img src="img/head.jpg" width="100%">
+<div id="app">
+
+    <el-tabs v-model="activeName" type="card"
+             :tab-position="tabPosition" style="background: #8c939d" @tab-click="handleClick">
+        <el-tab-pane label="首页" name="first" style="background: #ffffff">
+            <img src=img/first.jpg style="width: 91%;height: 91%">
+        </el-tab-pane>
+
+        <!--账号管理系统
+        包含
+        1、显示信息的表格
+        2、条件查询
+        3、新增用户
+        4、删除本行
+        5、编辑本行
+        -->
+        <el-tab-pane v-if="this.showInfo.user" label="账号管理" name="second" id="userManager" :disabled="userManagerPanDisabled">
+            <div>
+
+                <!--用户管理界面表单-->
+                <template>
+                    <el-form :inline="true" label-width="80px" style="background: white">
+                        <el-form-item label="用户名">
+                            <el-input placeholder="请输入用户名" v-model="userDataFrom.username"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button icon="el-icon-search" circle @click="showUserManager"></el-button>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="addNewUserManagerDialogVisible=true">新增</el-button>
+                        </el-form-item>
+                    </el-form>
+                </template>
+
+                <!--用户管理界面表格-->
+                <el-table
+                        :data="userdataPage.tableData"
+                        style="width: 100%"
+                        :row-class-name="tableRowClassName">
+                    <el-table-column
+                            type="index"
+                            width="50">
+                    </el-table-column>
+                    <el-table-column
+                            prop="username"
+                            align="center"
+                            label="姓名">
+                    </el-table-column>
+                    <el-table-column
+                            prop="email"
+                            align="center"
+                            label="邮箱">
+                    </el-table-column>
+                    <el-table-column
+                            prop="telephone"
+                            align="center"
+                            label="电话">
+                    </el-table-column>
+                    <el-table-column
+                            prop="role"
+                            align="center"
+                            label="身份">
+                    </el-table-column>
+                    <el-table-column
+                            prop="statusStr"
+                            align="center"
+                            label="当前状态">
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            label="操作">
+                        <template slot-scope="scope">
+                            <el-button type="primary" icon="el-icon-edit" circle
+                                       @click="updateUserManagerInfo(scope.row)"></el-button>
+
+                            <el-button type="danger" icon="el-icon-delete" circle
+                                       @click="deleteUserManager(scope.row)"></el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </div>
+
+            <!--新增表单-->
+            <el-dialog title="用户信息" :visible.sync="addNewUserManagerDialogVisible" width="30%">
+                <el-form :model="addNewUserTable">
+                    <el-form-item label="姓名" label-width="80px">
+                        <el-input v-model="addNewUserTable.username" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码" label-width="80px">
+                        <el-input v-model="addNewUserTable.password" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="邮箱" label-width="80px">
+                        <el-input v-model="addNewUserTable.email" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="电话" label-width="80px">
+                        <el-input v-model="addNewUserTable.telephone" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="身份" label-width="80px">
+                        <el-select v-model="addNewUserTable.role" placeholder="请选择身份">
+                            <el-option label="超级管理" value="超级管理"></el-option>
+                            <el-option label="人事管理" value="人事管理"></el-option>
+                            <el-option label="仓库管理" value="仓库管理"></el-option>
+                            <el-option label="订单管理" value="订单管理"></el-option>
+                            <el-option label="客服" value="客服"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="状态" label-width="80px">
+                        <el-switch v-model="addNewUserTable.status" active-value="1" inactive-value="0"></el-switch>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="addNewUserManagerDialogVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="addNewUserManager">确 定</el-button>
+                </div>
+            </el-dialog>
+            <!--修改管理信息表单-->
+            <el-dialog title="用户信息" :visible.sync="updateUserManagerDialogVisible" width="30%">
+                <el-form :model="addNewUserTable">
+                    <el-form-item label="姓名" label-width="80px">
+                        <el-input v-model="updateUserManager.username" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码" label-width="80px">
+                        <el-input v-model="updateUserManager.password" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="邮箱" label-width="80px">
+                        <el-input v-model="updateUserManager.email" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="电话" label-width="80px">
+                        <el-input v-model="updateUserManager.telephone" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="身份" label-width="80px">
+                        <el-select v-model="updateUserManager.role" placeholder="请选择身份">
+                            <el-option label="超级管理" value="超级管理"></el-option>
+                            <el-option label="人事管理" value="人事管理"></el-option>
+                            <el-option label="仓库管理" value="仓库管理"></el-option>
+                            <el-option label="订单管理" value="订单管理"></el-option>
+                            <el-option label="客服" value="客服"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="状态" label-width="80px">
+                        <el-switch v-model="updateUserManager.status" :active-value="1" :inactive-value="0"></el-switch>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="updateUserManagerDialogVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="updateUserManagerSubmit">确 定</el-button>
+                </div>
+            </el-dialog>
+            <!--分页-->
+            <div class="block" style="background: white">
+                <el-pagination
+                        @size-change="handleSizeChangeOfUserPage"
+                        @current-change="handleCurrentChangeOfUserPage"
+                        :current-page="userdataPage.currentPage"
+                        :page-sizes="[5, 10, 15, 20]"
+                        :page-size="userdataPage.pageSize"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="userdataPage.totalCount">
+                </el-pagination>
+            </div>
+        </el-tab-pane>
+
+
+        <!--
+        商品管理界面
+        包含
+        1、显示信息的表格
+        2、条件查询
+        3、新增用户
+        4、删除本行
+        5、编辑本行
+        -->
+
+
+        <el-tab-pane v-if="this.showInfo.goods" label="商品管理" name="third">
+            <!--商品搜索表单-->
+            <template>
+                <el-form :inline="true" label-width="80px" style="background: white">
+                    <el-form-item label="商品名称">
+                        <el-input placeholder="请输入商品名称" v-model="goodsData.goodName"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="品牌">
+                        <el-input placeholder="品牌" v-model="goodsData.brand"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button icon="el-icon-search" circle @click="showGoodsData()"></el-button>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="addNewGoodsDialogVisible=true">新增</el-button>
+                    </el-form-item>
+                </el-form>
+            </template>
+
+            <!--商品表格-->
+            <el-table
+                    :data="goodsDataPage.tableData"
+                    style="width: 100%"
+                    :row-class-name="tableRowClassName">
+                <el-table-column type="expand">
+                    <template slot-scope="props">
+                        <el-form label-position="left" inline class="demo-table-expand">
+                            <el-form-item label="图片">
+                                <span>
+                                     <el-image
+                                             style="width: 100px; height: 100px"
+                                             :src="props.row.img"
+                                             :fit="props.row.name"></el-image>
+                                </span>
+                            </el-form-item>
+                            <el-form-item label="商品名称">
+                                <span>{{ props.row.goodName }}</span>
+                            </el-form-item>
+                            <el-form-item label="品牌">
+                                <span>{{ props.row.brand }}</span>
+                            </el-form-item>
+                            <el-form-item label="商品价格">
+                                <span>{{ props.row.price }}</span>
+                            </el-form-item>
+                            <el-form-item label="商品数量">
+                                <span>{{ props.row.num }}</span>
+                            </el-form-item>
+                            <el-form-item label="描述">
+                                <span>{{ props.row.description }}</span>
+                            </el-form-item>
+                            <el-form-item label="商品分类">
+                                <span>{{ props.row.category }}</span>
+                            </el-form-item>
+                            <el-form-item label="状态">
+                                <span>{{ props.row.status}}</span>
+                            </el-form-item>
+                        </el-form>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        type="index"
+                        width="50">
+                </el-table-column>
+                <el-table-column
+                        prop="goodName"
+                        align="center"
+                        label="商品名称">
+                </el-table-column>
+                <el-table-column
+                        prop="brand"
+                        align="center"
+                        label="品牌">
+                </el-table-column>
+                <el-table-column
+                        prop="status"
+                        align="center"
+                        label="当前状态">
+                </el-table-column>
+                <el-table-column
+                        align="center"
+                        label="操作">
+                    <template slot-scope="scope">
+                        <el-button type="primary" icon="el-icon-edit" circle
+                                   @click="updateGoodsManagerInfo(scope.row)"></el-button>
+                        <el-button type="danger" icon="el-icon-delete" circle
+                                   @click="deleteGoods(scope.row)"></el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <!--新增商品-->
+            <el-dialog title="商品信息" :visible.sync="addNewGoodsDialogVisible" width="30%">
+                <el-form :model="addGoodsData">
+                    <el-form-item label="商品图片" label-width="80px">
+                        <el-upload
+                                class="avatar-uploader"
+                                action="http://localhost:8080/DatabaseDesign/user/uploadImg"
+                                :show-file-list="false"
+                                :on-success="AddHandleAvatarSuccess"
+                                :before-upload="beforeAvatarUpload">
+                            <img v-if="addGoodsData.img" :src="addGoodsData.img" class="avatar">
+                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
+                    </el-form-item>
+                    <el-form-item label="商品名称" label-width="80px">
+                        <el-input v-model="addGoodsData.goodName" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="商品品牌" label-width="80px">
+                        <el-input v-model="addGoodsData.brand" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="商品价格" label-width="80px">
+                        <el-input v-model="addGoodsData.email" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="商品数量" label-width="80px">
+                        <el-input v-model="addGoodsData.telephone" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="商品描述" label-width="80px">
+                        <el-input v-model="addGoodsData.description" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="类别" label-width="80px">
+                        <el-select v-model="addGoodsData.category" placeholder="请选择类别">
+                            <el-option
+                                    v-for="item in goodsCategoryS"
+                                    :key="item"
+                                    :label="item"
+                                    :value="item">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="状态" label-width="80px">
+                        <el-select v-model="addGoodsData.status" placeholder="请选择状态">
+                            <el-option label="下架" value="下架"></el-option>
+                            <el-option label="在售" value="在售"></el-option>
+                            <el-option label="无货" value="无货"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="addNewGoodsDialogVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="addNewGoods()">确 定</el-button>
+                </div>
+            </el-dialog>
+            <!--修改商品数据-->
+            <el-dialog title="商品信息" :visible.sync="updateGoodsDialogVisible" width="30%">
+                <el-form :model="updateGoodsData">
+                    <el-form-item label="商品图片" label-width="80px">
+                        <el-upload
+                                class="avatar-uploader"
+                                action="http://localhost:8080/DatabaseDesign/user/uploadImg"
+                                :show-file-list="false"
+                                :on-success="updateHandleAvatarSuccess"
+                                :before-upload="beforeAvatarUpload">
+                            <img v-if="updateGoodsData.img" :src="updateGoodsData.img" class="avatar">
+                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
+                    </el-form-item>
+                    <el-form-item label="商品名称" label-width="80px">
+                        <el-input v-model="updateGoodsData.goodName" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="商品品牌" label-width="80px">
+                        <el-input v-model="updateGoodsData.brand" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="商品价格" label-width="80px">
+                        <el-input v-model="updateGoodsData.price" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="商品数量" label-width="80px">
+                        <el-input v-model="updateGoodsData.num" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="商品描述" label-width="80px">
+                        <el-input v-model="updateGoodsData.description" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="分类" label-width="80px">
+                        <el-select v-model="updateGoodsData.category" placeholder="请选择身份">
+                            <el-option
+                                    v-for="item in goodsCategoryS"
+                                    :key="item"
+                                    :label="item"
+                                    :value="item">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="状态" label-width="80px">
+                        <el-select v-model="updateGoodsData.status" placeholder="请选择身份">
+                            <el-option label="下架" value="下架"></el-option>
+                            <el-option label="在售" value="在售"></el-option>
+                            <el-option label="无货" value="无货"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="updateGoodsDialogVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="updateGoodsSubmit()">确 定</el-button>
+                </div>
+            </el-dialog>
+            <!--分页-->
+            <div class="block" style="background: white">
+                <el-pagination
+                        @size-change="handleSizeChangeOfGoodsPage"
+                        @current-change="handleCurrentChangeOfGoodsPage"
+                        :current-page="goodsDataPage.currentPage"
+                        :page-sizes="[5, 10, 15, 20]"
+                        :page-size="goodsDataPage.pageSize"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="goodsDataPage.totalCount">
+                </el-pagination>
+            </div>
+
+        </el-tab-pane>
+
+
+        <!--订单管理-->
+        <el-tab-pane v-if="this.showInfo.order" label="订单管理" name="fourth">
+            <!--订单表单-->
+            <template>
+                <el-form :inline="true" label-width="80px" style="background: white">
+                    <el-form-item label="买家">
+                        <el-input placeholder="请输入商品买家" v-model="formInOrders.customerName"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="商品">
+                        <el-input placeholder="请输入商品名称" v-model="formInOrders.goodsName"></el-input>
+                    </el-form-item>
+                    <el-form-item label="状态">
+                        <el-input placeholder="请输入商品名称" v-model="formInOrders.status"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button icon="el-icon-search" circle @click="showOrdersData"></el-button>
+                    </el-form-item>
+                </el-form>
+            </template>
+
+            <!--订单表单-->
+            <el-table
+                    :data="ordersDataPage.tableData"
+                    style="width: 100%"
+                    :row-class-name="tableRowClassName">
+                <el-table-column type="expand">
+
+                    <template slot-scope="props">
+                        <el-collapse>
+                            <el-form label-position="left" inline class="demo-table-expand">
+
+                                <el-form-item label="商品名称">
+                                    <span>{{ props.row.goodsName }}</span>
+                                </el-form-item>
+
+                                <el-form-item label="商品总价">
+                                    <span>{{ props.row.totalPrice }}</span>
+                                </el-form-item>
+                                <el-form-item label="商品单格">
+                                    <span>{{ props.row.price }}</span>
+                                </el-form-item>
+                                <el-form-item label="商品数量">
+                                    <span>{{ props.row.num }}</span>
+                                </el-form-item>
+                                <el-form-item label="订单状态">
+                                    <span>{{ props.row.status }}</span>
+                                </el-form-item>
+                                <el-collapse-item title="收货信息" name="1">
+                                    <el-form-item label="收货人">
+                                        <span>{{ props.row.shName }}</span>
+                                    </el-form-item>
+                                    <el-form-item label="收货地址">
+                                        <span>{{ props.row.address }}</span>
+                                    </el-form-item>
+                                    <el-form-item label="电话">
+                                        <span>{{ props.row.telephone}}</span>
+                                    </el-form-item>
+                                </el-collapse-item>
+                                <el-collapse-item title="时间信息" name="2">
+                                    <el-form-item label="购买时间">
+                                        <span>{{ props.row.buyTime}}</span>
+                                    </el-form-item>
+                                    <el-form-item label="发货时间">
+                                        <span>{{ props.row.fhTime}}</span>
+                                    </el-form-item>
+                                    <el-form-item label="完成时间">
+                                        <span>{{ props.row.finishTime}}</span>
+                                    </el-form-item>
+                                </el-collapse-item>
+                            </el-form>
+                        </el-collapse>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        type="index"
+                        width="50">
+                </el-table-column>
+                <el-table-column
+                        prop="customerName"
+                        align="center"
+                        label="买家">
+                </el-table-column>
+                <el-table-column
+                        prop="goodsName"
+                        align="center"
+                        label="商品">
+                </el-table-column>
+                <el-table-column
+                        prop="totalPrice"
+                        align="center"
+                        label="交易金额">
+                </el-table-column>
+                <el-table-column
+                        prop="status"
+                        align="center"
+                        label="状态">
+                </el-table-column>
+                <el-table-column
+                        align="center"
+                        label="操作">
+                    <template slot-scope="props">
+                        <el-dropdown @command="handleCommandOrder">
+                            <el-button class="el-dropdown-link" type="primary" icon="el-icon-s-order" circle
+                            ></el-button>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item divided v-if="props.row.status==='待发货'"
+                                                  :command="beforeCommand('已发货',props.row)">发货
+                                </el-dropdown-item>
+                                <el-dropdown-item divided v-if="props.row.status==='待换货'"
+                                                  :command="beforeCommand('已换货',props.row)">换货
+                                </el-dropdown-item>
+                                <el-dropdown-item divided v-if="props.row.status==='待退款'"
+                                                  :command="beforeCommand('已退款',props.row)">退款
+                                </el-dropdown-item>
+                                <el-dropdown-item divided v-if="props.row.status==='待退款' || props.row.status==='待换货'"
+                                                  :command="beforeCommand('拒绝申请',props.row)">拒绝申请
+                                </el-dropdown-item>
+                                <el-dropdown-item divided :command="beforeCommand('删除订单',props.row)">删除订单
+                                </el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </template>
+                </el-table-column>
+            </el-table>
+
+            <!--分页-->
+            <div class="block" style="background: white">
+                <el-pagination
+                        @size-change="handleSizeChangeOfOrderPage"
+                        @current-change="handleCurrentChangeOfOrderPage"
+                        :current-page="ordersDataPage.currentPage"
+                        :page-sizes="[5, 10, 15, 20]"
+                        :page-size="ordersDataPage.pageSize"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="ordersDataPage.totalCount">
+                </el-pagination>
+            </div>
+        </el-tab-pane>
+
+
+        <el-tab-pane label="统计信息" name="fifth" style="background: #ffffff">
+            <div id="main" style="width: 500px;height:400px;background: gray"></div>
+        </el-tab-pane>
+    </el-tabs>
+</div>
+
+<script src="js/vue.js"></script>
+<script src="element-ui/lib/index.js"></script>
+<link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+<script src="js/axios-0.18.0.js"></script>
+<script src="js/echarts.js"></script>
+<script src="js/hash.js"></script>
+
+<script>
+    let vue = new Vue({
+        el: "#app",
+        watch: {
+            'addNewGoodsDialogVisible': function () {
+                if (this.addNewGoodsDialogVisible === false) {
+                    this.showGoodsData();
+                }
+            },
+            'updateGoodsDialogVisible': function () {
+                if (this.updateGoodsDialogVisible === false) {
+                    this.showGoodsData();
+                }
+            },
+            'updateUserManagerDialogVisible': function () {
+                if (this.updateUserManagerDialogVisible === false) {
+                    this.showUserManager();
+                }
+            },
+            'addNewUserManagerDialogVisible': function () {
+                if (this.addNewUserManagerDialogVisible === false) {
+                    this.showUserManager();
+                }
+            },
+        },
+        mounted:function (){
+            let cookie = document.cookie;
+            console.log(cookie);
+            let strings = cookie.split("=");
+            let s = decodeURI(strings[1]);
+            if(s==='超级管理'){
+                this.showInfo.user=true;
+                this.showInfo.goods=true;
+                this.showInfo.order=true;
+            }else if(s==='人事管理'){
+                this.showInfo.user=true;
+                this.showInfo.goods=false;
+                this.showInfo.order=false;
+            }else if(s==='仓库管理'||s==='客服'){
+                this.showInfo.user=false;
+                this.showInfo.goods=true;
+                this.showInfo.order=true;
+            }else if(s==='订单管理'){
+                this.showInfo.user=false;
+                this.showInfo.goods=false;
+                this.showInfo.order=true;
+            }
+        },
+        methods: {
+            handleCommandOrder(command) {
+                command.row.status = command.status;
+                this.optionOrder(command.row);
+            },
+            beforeCommand(status, row) {
+                return {
+                    'status': status,
+                    'row': row,
+                }
+            },
+
+            tableRowClassName({row, rowIndex}) {
+                if (rowIndex === 1) {
+                    return 'warning-row';
+                } else if (rowIndex === 3) {
+                    return 'success-row';
+                }
+                return '';
+            },
+
+            handleSizeChangeOfUserPage(val) {
+                this.userdataPage.pageSize = val;
+                this.showUserManager();
+            },
+            handleSizeChangeOfGoodsPage(val) {
+                this.goodsDataPage.pageSize = val;
+                this.showGoodsData();
+            },
+            handleCurrentChangeOfUserPage(val) {
+                this.userdataPage.currentPage = val;
+                this.showUserManager();
+            },
+            handleCurrentChangeOfGoodsPage(val) {
+                this.goodsDataPage.currentPage = val;
+                this.showGoodsData();
+            },
+            handleSizeChangeOfOrderPage(val) {
+                this.ordersDataPage.pageSize = val;
+                this.showOrdersData();
+            },
+            handleCurrentChangeOfOrderPage(val) {
+                this.ordersDataPage.currentPage = val;
+                this.showOrdersData();
+            },
+            handleClick(tab, event) {
+                if (tab.name === 'second') {
+                    this.showUserManager();
+                } else if (tab.name === 'third') {
+                    this.showGoodsData();
+                } else if (tab.name === 'fourth') {
+                    this.showOrdersData();
+                }
+            },
+            onSubmit() {
+                console.log('submit!');
+            },
+            isVis() {
+                document.getElementById("userManager").style.visibility = "hidden";
+            },
+
+            updateUserManagerInfo(val) {
+                this.updateUserManager = val;
+                this.updateUserManager.status = (val.statusStr === "启用" ? 1 : 0);
+                console.log(this.updateUserManager.status);
+                this.updateUserManagerDialogVisible = true;
+            },
+
+            updateUserManagerSubmit() {
+
+                if (this.updateUserManager.password !== '' && this.updateUserManager.password !== null && this.updateUserManager.password !== undefined) {
+                    this.updateUserManager.password = hex_md5(this.updateUserManager.password);
+                }
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/DatabaseDesign/user/updateUserManagerServlet",
+                    data: this.updateUserManager,
+                }).then(response => {
+                    if (response.data === "success") {
+                        this.$message({
+                            message: '修改成功',
+                            type: 'success'
+                        });
+                    } else {
+                        this.$message.error("修改失败");
+                    }
+                    this.updateUserManagerDialogVisible = false;
+                })
+            },
+            updateGoodsSubmit() {
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/DatabaseDesign/goods/updateGoodsServlet",
+                    data: this.updateGoodsData,
+                }).then(response => {
+                    if (response.data === "success") {
+                        this.$message({
+                            message: '修改成功',
+                            type: 'success'
+                        });
+                    } else {
+                        this.$message.error("修改失败");
+                    }
+                    this.updateGoodsDialogVisible = false;
+                })
+            },
+            optionOrder(val) {
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:8080/DatabaseDesign/order/updateOrder',
+                    data: val,
+                }).then(response => {
+                    console.log(response.data);
+                    if (response.data === false) {
+                        this.$message.error("操作失败");
+                    } else {
+                        this.$message.success(response.data);
+                    }
+                    this.showOrdersData();
+                })
+            },
+
+            deleteUserManager(val) {
+                this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios({
+                        method: "post",
+                        url: "http://localhost:8080/DatabaseDesign/user/deleteUserManagerByIdServlet",
+                        data: val,
+                    }).then(response => {
+                        if (response.data === "success") {
+                            this.$message({
+                                message: '删除成功',
+                                type: 'success'
+                            });
+                        } else {
+                            this.$message.error('删除失败');
+                        }
+                    })
+                    this.showUserManager();
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            deleteGoods(val) {
+                this.$confirm('此操作将永久删除该商品, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios({
+                        method: "post",
+                        url: "http://localhost:8080/DatabaseDesign/goods/deleteGoodsByIdServlet",
+                        data: val,
+                    }).then(response => {
+                        if (response.data === "success") {
+                            this.$message({
+                                message: '删除成功',
+                                type: 'success'
+                            });
+                        } else {
+                            this.$message.error('删除失败');
+                        }
+                        this.showGoodsData();
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+
+            addNewUserManager() {
+                if (this.addNewUserTable.password !== '' && this.addNewUserTable.password !== null) {
+                    this.addNewUserTable.password = hex_md5(this.addNewUserTable.password);
+                }
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/DatabaseDesign/user/addNewUserManagerServlet",
+                    data: this.addNewUserTable,
+                }).then(response => {
+                    if (response.data === "success") {
+                        this.$message({
+                            message: '添加成功',
+                            type: 'success'
+                        });
+                    } else {
+                        this.$message.error('修改失败');
+                    }
+                    this.addNewUserManagerDialogVisible = false;
+                    this.addNewUserTable.status = '';
+                    this.addNewUserTable.username = '';
+                    this.addNewUserTable.password = '';
+                    this.addNewUserTable.role = '';
+                    this.addNewUserTable.email = '';
+                    this.addNewUserTable.telephone = '';
+                })
+            },
+            addNewGoods() {
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/DatabaseDesign/goods/addGoodsServlet",
+                    data: this.addGoodsData,
+                }).then(response => {
+                    if (response.data === "success") {
+                        this.$message({
+                            message: '添加成功',
+                            type: 'success'
+                        });
+                    } else {
+                        this.$message.error('修改失败');
+                    }
+                    this.addNewGoodsDialogVisible = false;
+                })
+            },
+
+            showUserManager() {
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/DatabaseDesign/user/selectAllServlet?currentPage=" + this.userdataPage.currentPage + "&pageSize=" + this.userdataPage.pageSize,
+                    data: this.userDataFrom
+                }).then(response => {
+                    this.userdataPage.tableData = response.data.rows;
+                    this.userdataPage.totalCount = response.data.totalCount;
+                })
+            },
+            showGoodsData() {
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/DatabaseDesign/goods/selectAllServlet?currentPage=" + this.goodsDataPage.currentPage + "&pageSize=" + this.goodsDataPage.pageSize,
+                    data: this.goodsData
+                }).then(response => {
+                    this.goodsDataPage.tableData = response.data.rows;
+                    this.goodsDataPage.totalCount = response.data.totalCount;
+                })
+            },
+            showOrdersData() {
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/DatabaseDesign/order/selectAll?currentPage=" + this.goodsDataPage.currentPage + "&pageSize=" + this.goodsDataPage.pageSize,
+                    data: this.formInOrders,
+                }).then(response => {
+                    this.ordersDataPage.tableData = response.data.rows;
+                    this.ordersDataPage.totalCount = response.data.totalCount;
+                })
+            },
+
+            goodsManagerDetailInfo() {
+                this.drawerAboutDetail = true;
+            },
+            AddHandleAvatarSuccess(res, file) {
+                this.addGoodsData.img = res;
+            },
+            updateHandleAvatarSuccess(res, file) {
+                this.updateGoodsData.img = res;
+            },
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
+            },
+            updateGoodsManagerInfo(val) {
+                this.updateGoodsData = val;
+                this.updateGoodsDialogVisible = true;
+            },
+        },
+        data() {
+            return {
+                imageUrl: '',
+                addNewGoodsDialogVisible: false,
+                updateGoodsDialogVisible: false,
+                updateUserManagerDialogVisible: false,
+                userManagerPanDisabled: false,
+                addNewUserManagerDialogVisible: false,
+                activeName: 'first',
+                tabPosition: 'left',
+                allow: 'visibility: hidden',
+                goodsCategoryS: ["数码", "服装"],
+
+                showInfo: {
+                    user: false,
+                    goods: false,
+                    order:false,
+                },
+                formInGoods: {
+                    goodName: '',
+                    goods: '',
+                },
+                formInOrders: {
+                    customerName: '',
+                    goodName: '',
+                    status: '',
+                },
+                userDataFrom: {
+                    id: '',
+                    username: '',
+                    email: '',
+                    telephone: '',
+                    role: '',
+                    status: '',
+                    statusStr: ''
+                },
+                addNewUserTable: {
+                    id: '',
+                    username: '',
+                    password: '',
+                    email: '',
+                    telephone: '',
+                    role: '',
+                    status: ''
+                },
+                updateUserManager: {
+                    id: '',
+                    username: '',
+                    password: '',
+                    email: '',
+                    telephone: '',
+                    role: '',
+                    status: ''
+                },
+                userdataPage: {
+                    pageSize: 5,
+                    currentPage: 1,
+                    totalCount: 0,
+                    tableData: []
+                },
+                /**
+                 * 商品页数据
+                 * */
+                goodsDataPage: {
+                    pageSize: 5,
+                    currentPage: 1,
+                    totalCount: 0,
+                    tableData: [{
+                        img: 'http://localhost:8080/DatabaseDesign/resources/upload/QQ%E5%9B%BE%E7%89%8720210903095843.jpg',
+                        id: '',
+                        goodName: '2',
+                        price: 99999999.99,
+                        num: 0,
+                        description: '2',
+                        brand: '2',
+                        statusStr: '2',
+                        status: '2',
+                        category: '',
+                    }]
+                },
+                /**
+                 * 商品数据
+                 */
+                goodsData: {
+                    img: '',
+                    id: '',
+                    goodName: '',
+                    price: 99999999.99,
+                    num: 0,
+                    description: '',
+                    brand: '',
+                    statusStr: '',
+                    status: '',
+                    category: '',
+                },
+                /**
+                 * 新增商品数据
+                 */
+                addGoodsData: {
+                    img: '',
+                    id: '',
+                    goodName: '',
+                    price: 99999999.99,
+                    num: 0,
+                    description: '',
+                    brand: '',
+                    statusStr: '',
+                    status: '',
+                    category: '',
+                },
+                /**
+                 * 更新商品数据
+                 */
+                updateGoodsData: {
+                    img: '',
+                    id: '',
+                    goodName: '',
+                    price: 99999999.99,
+                    num: 0,
+                    description: '',
+                    brand: '',
+                    statusStr: '',
+                    status: '',
+                    category: '',
+                },
+                /**
+                 * 订单页数据
+                 * */
+                ordersDataPage: {
+                    pageSize: 5,
+                    currentPage: 1,
+                    totalCount: 0,
+                    tableData: [{
+                        id: '',
+                        customerName: 'liu',
+                        shName: 'sdsdsd',
+                        goodsName: 'aaa',
+                        totalPrice: 99999999.99,
+                        num: 10,
+                        price: 0.001,
+                        goods: '2',
+                        status: '2',
+                        detailAddress: '福建省',
+                        telephone: '44456456',
+                        buyTime: '2002年5月7日 12:00:00',
+                        finishTime: '2002年5月14日 12:00:00',
+                        fhTime: '2002年5月7日 13:00:00',
+                    }]
+                },
+            }
+        }
+    })
+
+    var myChart = echarts.init(document.getElementById('main'));
+    var option = {
+        backgroundColor: '#ffffff',
+        textStyle: {
+            color: 'rgba(255, 255, 255, 0.3)'
+        },
+        series: [
+            {
+                name: '访问来源',
+                type: 'pie',
+                radius: '55%',
+                data: [
+                    {value: 400, name: '搜索引擎'},
+                    {value: 335, name: '直接访问'},
+                    {value: 310, name: '邮件营销'},
+                    {value: 274, name: '联盟广告'},
+                    {value: 235, name: '视频广告'}
+                ],
+                roseType: 'angle',
+
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 200,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                },
+                label: {
+                    normal: {
+                        textStyle: {
+                            color: 'rgba(50, 50, 50, 0.5)'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        lineStyle: {
+                            color: 'rgba(50, 50, 50, 0.5)'
+                        }
+                    }
+                }
+
+            }
+        ]
+    }
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>
+</html>

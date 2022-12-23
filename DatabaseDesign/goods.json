@@ -1,0 +1,589 @@
+{
+  "api": "mtop.taobao.pcdetail.data.get",
+  "data": {
+    "seller": {
+      "creditLevel": "20",
+      "creditLevelIcon": "//gw.alicdn.com/tfs/TB1QoJUIwmTBuNjy1XbXXaMrVXa-84-36.png?getAvatar=avatar",
+      "evaluates": [
+        {
+          "level": "-1",
+          "levelText": "低",
+          "score": "4.7 ",
+          "title": "宝贝描述",
+          "type": "desc"
+        },
+        {
+          "level": "-1",
+          "levelText": "低",
+          "score": "4.8 ",
+          "title": "卖家服务",
+          "type": "serv"
+        },
+        {
+          "level": "-1",
+          "levelText": "低",
+          "score": "4.8 ",
+          "title": "物流服务",
+          "type": "post"
+        }
+      ],
+      "pcShopUrl": "//shop465965982.taobao.com",
+      "sellerId": "3937219703",
+      "sellerType": "B",
+      "shopIcon": "https://img.alicdn.com/tps/i1/T1_GC6XmXaXXXXXXXX-70-70.gif",
+      "shopId": "465965982",
+      "shopName": "天天特卖工厂店",
+      "startsIcon": "https://img.alicdn.com/imgextra/i2/O1CN01Z8Xo0V1vJCxVltJIB_!!6000000006151-2-tps-91-14.png",
+      "userId": "3937219703"
+    },
+    "item": {
+      "images": [
+        "https://img.alicdn.com/imgextra/i2/3937219703/O1CN01STj1y02LY1pGTYjGO_!!3937219703-0-C2M.jpg",
+        "https://img.alicdn.com/imgextra/i2/3937219703/O1CN014GQ3Ax2LY1ofI2wym_!!3937219703-0-C2M.jpg",
+        "https://img.alicdn.com/imgextra/i1/3937219703/O1CN01GsDaql2LY1ok0gAfg_!!3937219703-0-C2M.jpg",
+        "https://img.alicdn.com/imgextra/i4/3937219703/O1CN01YibuQq2LY1op9gVzB_!!3937219703-0-C2M.jpg",
+        "https://img.alicdn.com/imgextra/i1/3937219703/O1CN01bqTBGI2LY1og32msX_!!3937219703-0-C2M.jpg"
+      ],
+      "itemId": "691866261567",
+      "pcADescUrl": "//market.m.taobao.com/app/detail-project/desc/index.html?id=691866261567&descVersion=7.0&type=1&f=icoss!0691866261567!11459474702&sellerType=B",
+      "spuId": "3071212540",
+      "title": "独立湿巾75度酒精消毒湿巾纸杀菌小包儿童学生专用便携式单独包装",
+      "useWirelessDesc": "true",
+      "vagueSellCount": "2万+"
+    },
+    "feature": null,
+    "skuCore": {
+      "sku2info": {
+        "0": {
+          "logisticsTime": "20:00前付款，预计12月14日送达",
+          "moreQuantity": "true",
+          "price": {
+            "priceMoney": "290",
+            "priceText": "2.9-88.9"
+          },
+          "quantity": "200",
+          "quantityText": "有货"
+        },
+        "5089210227233": {
+          "moreQuantity": "true",
+          "price": {
+            "priceMoney": "8890",
+            "priceText": "88.9"
+          },
+          "quantity": "200",
+          "quantityText": "有货"
+        },
+        "5089210227232": {
+          "moreQuantity": "true",
+          "price": {
+            "priceMoney": "4690",
+            "priceText": "46.9"
+          },
+          "quantity": "200",
+          "quantityText": "有货"
+        },
+        "5089210227229": {
+          "moreQuantity": "false",
+          "price": {
+            "priceMoney": "590",
+            "priceText": "5.9"
+          },
+          "quantity": "0",
+          "quantityText": "无货"
+        },
+        "5089210227228": {
+          "logisticsTime": "20:00前付款，预计12月14日送达",
+          "moreQuantity": "true",
+          "price": {
+            "priceMoney": "290",
+            "priceText": "2.9"
+          },
+          "quantity": "200",
+          "quantityText": "有货"
+        },
+        "5089210227231": {
+          "moreQuantity": "true",
+          "price": {
+            "priceMoney": "2890",
+            "priceText": "28.9"
+          },
+          "quantity": "200",
+          "quantityText": "有货"
+        },
+        "5089210227230": {
+          "moreQuantity": "false",
+          "price": {
+            "priceMoney": "990",
+            "priceText": "9.9"
+          },
+          "quantity": "0",
+          "quantityText": "无货"
+        }
+      },
+      "skuItem": {
+        "itemStatus": "0",
+        "renderSku": "true",
+        "unitBuy": "1"
+      }
+    },
+    "services": null,
+    "params": {
+      "userAbtestDetail": "318828_447259"
+    },
+    "skuBase": {
+      "components": [],
+      "props": [
+        {
+          "hasImage": "false",
+          "name": "包数",
+          "pid": "255162815",
+          "values": [
+            {
+              "name": "10包",
+              "sortOrder": "0",
+              "vid": "3780987"
+            },
+            {
+              "name": "50包",
+              "sortOrder": "1",
+              "vid": "7123079"
+            },
+            {
+              "name": "100包",
+              "sortOrder": "2",
+              "vid": "6926372"
+            },
+            {
+              "name": "300包",
+              "sortOrder": "3",
+              "vid": "20939544"
+            },
+            {
+              "name": "500包",
+              "sortOrder": "4",
+              "vid": "89506848"
+            },
+            {
+              "name": "1000包",
+              "sortOrder": "5",
+              "vid": "79252579"
+            }
+          ]
+        }
+      ],
+      "skus": [
+        {
+          "propPath": "255162815:3780987",
+          "skuId": "5089210227228"
+        },
+        {
+          "propPath": "255162815:7123079",
+          "skuId": "5089210227229"
+        },
+        {
+          "propPath": "255162815:6926372",
+          "skuId": "5089210227230"
+        },
+        {
+          "propPath": "255162815:20939544",
+          "skuId": "5089210227231"
+        },
+        {
+          "propPath": "255162815:89506848",
+          "skuId": "5089210227232"
+        },
+        {
+          "propPath": "255162815:79252579",
+          "skuId": "5089210227233"
+        }
+      ]
+    },
+    "pcTrade": {
+      "buyNowUrl": "//buy.tmall.com/order/confirm_order.htm",
+      "pcBuyParams": {
+        "virtual": "false",
+        "buy_now": "133.35",
+        "auction_type": "b",
+        "x-uid": "",
+        "title": "独立湿巾75度酒精消毒湿巾纸杀菌小包儿童学生专用便携式单独包装",
+        "buyer_from": "ecity",
+        "detailIsLimit": "false",
+        "who_pay_ship": "卖家承担运费",
+        "rootCatId": "50025705",
+        "auto_post1": null,
+        "auto_post": "false",
+        "seller_nickname": "天天特卖工厂店",
+        "photo_url": "i2/3937219703/O1CN01STj1y02LY1pGTYjGO_!!3937219703-0-C2M.jpg",
+        "current_price": "133.35",
+        "region": "浙江金华",
+        "seller_id": "f7e6b9981a6b2ce42b0795ecd131979d",
+        "etm": "post"
+      },
+      "pcCartParam": {
+        "areaId": "350122",
+        "addressId": "14075757407"
+      },
+      "tradeType": "2"
+    },
+    "componentsVO": {
+      "headerVO": {
+        "buttons": [
+          {
+            "disabled": "false",
+            "events": [
+              {
+                "fields": {
+                  "url": "//list.tmall.com/search_product.htm"
+                },
+                "type": "onClick"
+              }
+            ],
+            "subTitle": {},
+            "title": {
+              "text": "搜天猫"
+            },
+            "type": "search_in_taobao"
+          },
+          {
+            "disabled": "false",
+            "events": [
+              {
+                "fields": {
+                  "url": "//shop465965982.taobao.com/search.htm"
+                },
+                "type": "onClick"
+              }
+            ],
+            "subTitle": {},
+            "title": {
+              "text": "搜本店"
+            },
+            "type": "search_in_store"
+          }
+        ],
+        "logoJumpUrl": "https://www.tmall.com",
+        "mallLogo": "https://img.alicdn.com/imgextra/i2/O1CN01a69z6z1hJklCkBqOU_!!6000000004257-2-tps-174-106.png",
+        "searchText": "搜索宝贝"
+      },
+      "deliveryVO": {
+        "agingDesc": "20:00前付款，预计12月14日送达",
+        "deliveryFromAddr": "浙江金华",
+        "deliveryToAddr": "福州市 连江县 敖江镇",
+        "freight": "快递: 免运费"
+      },
+      "headImageVO": {
+        "images": [
+          "https://img.alicdn.com/imgextra/i2/3937219703/O1CN01STj1y02LY1pGTYjGO_!!3937219703-0-C2M.jpg",
+          "https://img.alicdn.com/imgextra/i2/3937219703/O1CN014GQ3Ax2LY1ofI2wym_!!3937219703-0-C2M.jpg",
+          "https://img.alicdn.com/imgextra/i1/3937219703/O1CN01GsDaql2LY1ok0gAfg_!!3937219703-0-C2M.jpg",
+          "https://img.alicdn.com/imgextra/i4/3937219703/O1CN01YibuQq2LY1op9gVzB_!!3937219703-0-C2M.jpg",
+          "https://img.alicdn.com/imgextra/i1/3937219703/O1CN01bqTBGI2LY1og32msX_!!3937219703-0-C2M.jpg"
+        ]
+      },
+      "storeCardVO": {
+        "buttons": [
+          {
+            "disabled": "false",
+            "image": {
+              "gifAnimated": "false",
+              "imageUrl": "https://img.alicdn.com/imgextra/i4/O1CN01xQtwpn1ezwPauykYy_!!6000000003943-2-tps-30-32.png"
+            },
+            "title": {
+              "text": "联系客服"
+            },
+            "type": "customer_service"
+          },
+          {
+            "disabled": "false",
+            "events": [
+              {
+                "fields": {
+                  "url": "//shop465965982.taobao.com"
+                },
+                "type": "openUrl"
+              }
+            ],
+            "image": {
+              "gifAnimated": "false",
+              "imageUrl": "https://img.alicdn.com/imgextra/i3/O1CN01k56JHw1scx9dVvirY_!!6000000005788-2-tps-32-32.png"
+            },
+            "title": {
+              "text": "进入店铺"
+            },
+            "type": "enter_shop"
+          }
+        ],
+        "creditLevel": "20",
+        "creditLevelIcon": "//gw.alicdn.com/tfs/TB1QoJUIwmTBuNjy1XbXXaMrVXa-84-36.png?getAvatar=avatar",
+        "evaluates": [
+          {
+            "level": "-1",
+            "levelText": "低",
+            "score": "4.7 ",
+            "title": "宝贝描述",
+            "type": "desc"
+          },
+          {
+            "level": "-1",
+            "levelText": "低",
+            "score": "4.8 ",
+            "title": "卖家服务",
+            "type": "serv"
+          },
+          {
+            "level": "-1",
+            "levelText": "低",
+            "score": "4.8 ",
+            "title": "物流服务",
+            "type": "post"
+          }
+        ],
+        "sellerType": "B",
+        "shopIcon": "https://img.alicdn.com/tps/i1/T1_GC6XmXaXXXXXXXX-70-70.gif",
+        "shopName": "天天特卖工厂店",
+        "shopUrl": "//shop465965982.taobao.com",
+        "startsIcon": "https://img.alicdn.com/imgextra/i2/O1CN01Z8Xo0V1vJCxVltJIB_!!6000000006151-2-tps-91-14.png"
+      },
+      "bottomBarVO": {
+        "buyInMobile": "false",
+        "leftButtons": [
+          {
+            "background": {
+              "alpha": "1.0",
+              "disabledAlpha": "1.0",
+              "disabledColor": [
+                "#ff7700",
+                "#ff4900"
+              ],
+              "gradientColor": [
+                "#ff7700",
+                "#ff4900"
+              ]
+            },
+            "disabled": "false",
+            "title": {
+              "alpha": "1.0",
+              "bold": "true",
+              "color": "#ffffff",
+              "disabledAlpha": "0.2",
+              "disabledColor": "#80ffffff",
+              "fontSize": "16",
+              "text": "立即购买"
+            },
+            "type": "buy_now"
+          },
+          {
+            "background": {
+              "alpha": "1.0",
+              "disabledAlpha": "1.0",
+              "disabledColor": [
+                "#ffcb00",
+                "#ff9402"
+              ],
+              "gradientColor": [
+                "#ffcb00",
+                "#ff9402"
+              ]
+            },
+            "disabled": "false",
+            "title": {
+              "alpha": "1.0",
+              "bold": "true",
+              "color": "#ffffff",
+              "disabledAlpha": "0.2",
+              "disabledColor": "#33ffffff",
+              "fontSize": "16",
+              "text": "加入购物车"
+            },
+            "type": "add_cart"
+          }
+        ],
+        "rightButtons": [
+          {
+            "disabled": "false",
+            "icon": {
+              "alpha": "1.0",
+              "color": "#666666",
+              "disabledAlpha": "1.0",
+              "disabledColor": "#dddddd",
+              "iconFontName": "뀚",
+              "size": "14"
+            },
+            "title": {
+              "alpha": "1.0",
+              "bold": "false",
+              "color": "#666666",
+              "disabledAlpha": "1.0",
+              "disabledColor": "#666666",
+              "fontSize": "14",
+              "text": "收藏"
+            },
+            "type": "collect"
+          }
+        ]
+      },
+      "titleVO": {
+        "salesDesc": "月销 2万+",
+        "subTitles": [],
+        "title": {
+          "title": "独立湿巾75度酒精消毒湿巾纸杀菌小包儿童学生专用便携式单独包装"
+        }
+      },
+      "extensionInfoVO": {
+        "infos": [
+          {
+            "items": [
+              {
+                "text": [
+                  "每300减40"
+                ]
+              }
+            ],
+            "title": "优惠",
+            "type": "BIG_MARK_DOWN_COUPON"
+          },
+          {
+            "items": [
+              {
+                "text": [
+                  "价保服务",
+                  "假一赔四",
+                  "30天包退",
+                  "退货运费险",
+                  "上门取退",
+                  "极速退款",
+                  "七天无理由退换"
+                ]
+              }
+            ],
+            "title": "保障",
+            "type": "GUARANTEE"
+          },
+          {
+            "items": [
+              {
+                "text": [
+                  "绮运优品"
+                ],
+                "title": "品牌"
+              },
+              {
+                "text": [
+                  "csazf-05"
+                ],
+                "title": "型号"
+              },
+              {
+                "text": [
+                  "便携式"
+                ],
+                "title": "包装种类"
+              },
+              {
+                "text": [
+                  "140x165mm"
+                ],
+                "title": "尺寸"
+              },
+              {
+                "text": [
+                  "1片"
+                ],
+                "title": "片数"
+              },
+              {
+                "text": [
+                  "浙卫消证字（2020）第0545号"
+                ],
+                "title": "消字号"
+              },
+              {
+                "text": [
+                  "10包 50包 100包 300包 500包 1000包"
+                ],
+                "title": "包数"
+              }
+            ],
+            "title": "参数",
+            "type": "BASE_PROPS"
+          }
+        ]
+      },
+      "debugVO": {
+        "host": "taodetail033060128099.center.na620@33.60.128.99",
+        "traceId": "210595c916708408767005532e5818"
+      },
+      "rightBarVO": {
+        "buyerButtons": [
+          {
+            "disabled": "false",
+            "href": "https://h5.m.taobao.com/awp/core/detail.htm?id=691866261567",
+            "icon": "//gw.alicdn.com/imgextra/i2/O1CN01x9tTha1EGtU2UhV5B_!!6000000000325-2-tps-48-48.png",
+            "label": "手机购买",
+            "type": "qrcode"
+          },
+          {
+            "disabled": "false",
+            "icon": "//img.alicdn.com/imgextra/i1/O1CN013cC24N1Um4HzMwyE7_!!6000000002559-2-tps-52-46.png",
+            "label": "消息",
+            "type": "wangwang"
+          },
+          {
+            "disabled": "false",
+            "icon": "//gw.alicdn.com/imgextra/i1/O1CN01Vtt9UC1xbe8fKra2s_!!6000000006462-2-tps-48-48.png",
+            "label": "购物车",
+            "type": "cart"
+          },
+          {
+            "disabled": "false",
+            "href": "//jubao.taobao.com/index.htm?itemId=691866261567&spm=a1z6q.7847058",
+            "icon": "//gw.alicdn.com/imgextra/i3/O1CN01eCrL4620CrY63DlJF_!!6000000006814-2-tps-48-48.png",
+            "label": "举报",
+            "type": "report"
+          },
+          {
+            "disabled": "false",
+            "icon": "//gw.alicdn.com/imgextra/i3/O1CN01Eui9x51lVtmC9xKfp_!!6000000004825-2-tps-48-48.png",
+            "label": "反馈",
+            "type": "feedback"
+          },
+          {
+            "disabled": "false",
+            "type": "backTop"
+          }
+        ],
+        "sellerButtons": []
+      },
+      "priceVO": {
+        "mainBelt": {
+          "beltStyleType": "2",
+          "logo": "https://img.alicdn.com/imgextra/i4/O1CN01oP767G1oua0PR0r83_!!6000000005285-2-tps-732-72.png",
+          "priceBeltImg": "https://img.alicdn.com/imgextra/i4/O1CN01qCmpij27AIgesUFUu_!!6000000007756-2-tps-1500-360.png",
+          "rightBelt": {
+            "countdown": "true",
+            "endTime": "1670860799000",
+            "extraText": "下单立抢",
+            "extraTextColor": "#FFFFFF",
+            "now": "1670840876829",
+            "startTime": "1670673600000",
+            "text": "热卖中",
+            "textColor": "#FFFFFF"
+          }
+        },
+        "price": {
+          "hiddenPrice": "false",
+          "priceColor": "#FF4F00",
+          "priceDesc": "起",
+          "priceMoney": "290",
+          "priceText": "2.9",
+          "priceTitleColor": "#FF4F00",
+          "priceUnit": "￥"
+        }
+      }
+    }
+  },
+  "ret": [
+    "SUCCESS::调用成功"
+  ],
+  "v": "1.0"
+}
